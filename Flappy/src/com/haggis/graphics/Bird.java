@@ -7,15 +7,19 @@ public class Bird {
 	int x = 64;
 	int y = Window.HEIGHT / 2;
 	int size = 32;
-	int lift = -4;
+	int lift = -3;
 	Color col = Color.white;
 
 	int gravity = 1;
+			
 	int velocity = 0;
+	int maxSpeed = 3;
 
 	void update() {
 		velocity += gravity;
 		y += velocity;
+		
+		
 
 		if (y >= Window.HEIGHT-size) {
 			y = Window.HEIGHT-size;
