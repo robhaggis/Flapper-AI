@@ -23,12 +23,11 @@ public class Game {
 		pipes.clear();
 		toRemove.clear();
 		bird = new Bird();
+		pipes.add(new Pipe());
 	}
 
 	public void update() {
 		frameCount++;
-
-		
 
 		for (Pipe p : pipes) {
 			p.update();
