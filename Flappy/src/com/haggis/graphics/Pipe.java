@@ -13,10 +13,8 @@ public class Pipe {
 	int speed = 2;
 	int x = Window.WIDTH;
 	int width = 20;
-	boolean highlight = false;
 
 	Color col = Color.WHITE;
-	Color highlightCol = Color.red;
 
 	void update() {
 		x -= speed;
@@ -24,19 +22,18 @@ public class Pipe {
 
 	boolean collides(Bird b) {
 
-		if (b.y < top || b.y > Window.HEIGHT - bottom) {
-			if (b.x > x && b.x < x + width) {
-				this.highlight = true;
+		if (b.y < top || b.y+b.size > Window.HEIGHT - bottom) {
+			if (b.x +b.size> x && b.x < x + width) {
+				b.gameOver();
 				return true;
 			}
 		}
-		highlight = false;
 		return false;
+		
 	}
 
 	void show(Graphics2D g) {
-		if(highlight)g.setColor(highlightCol);
-		else g.setColor(col);
+		g.setColor(col);
 		g.fillRect(x, 0, width, top);
 		g.fillRect(x, Window.HEIGHT - bottom, width, bottom);
 	}

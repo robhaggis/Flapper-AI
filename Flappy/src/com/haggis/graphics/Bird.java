@@ -11,27 +11,38 @@ public class Bird {
 	Color col = Color.white;
 
 	int gravity = 1;
-			
+
 	int velocity = 0;
 	int maxSpeed = 3;
 
+	boolean dead = false;
+
 	void update() {
-		velocity += gravity;
-		y += velocity;
-		
-		
 
-		if (y >= Window.HEIGHT-size) {
-			y = Window.HEIGHT-size;
-			velocity = 0;
+		if (!dead) {
+			velocity += gravity;
+			y += velocity;
+
+			if (y >= Window.HEIGHT - size) {
+				y = Window.HEIGHT - size;
+				velocity = 0;
+			}
+
+			if (y <= 0) {
+				y = 0;
+				velocity = 0;
+			}
+		}else
+		{
+			Game.reset();
 		}
 
-		if (y <= 0) {
-			y = 0;
-			velocity = 0;
-		}
 	}
-	
+
+	void gameOver() {
+		dead = true;
+	}
+
 	void up() {
 		velocity += lift;
 	}

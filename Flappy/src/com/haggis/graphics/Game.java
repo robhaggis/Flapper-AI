@@ -5,15 +5,24 @@ import java.util.ArrayList;
 
 public class Game {
 
-	Bird bird;
-	ArrayList<Pipe> pipes = new ArrayList<>();
-	ArrayList<Pipe> toRemove = new ArrayList<>();
+	static Bird bird;
+	static ArrayList<Pipe> pipes = new ArrayList<>();
+	static ArrayList<Pipe> toRemove = new ArrayList<>();
 	int pipeRate = 150;
 	int frameCount = 0;
 
 	public void init() {
+		pipes.clear();
+		toRemove.clear();
+		
 		bird = new Bird();
 		pipes.add(new Pipe());
+	}
+	
+	public static void reset() {
+		pipes.clear();
+		toRemove.clear();
+		bird = new Bird();
 	}
 
 	public void update() {
