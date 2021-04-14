@@ -19,10 +19,14 @@ public class Game {
 	public void update() {
 		frameCount++;
 
-		bird.update();
+		
 
 		for (Pipe p : pipes) {
 			p.update();
+			
+			if(p.collides(bird)) {
+			}
+			
 			if (p.x < -p.width) {
 				toRemove.add(p);
 			}
@@ -37,7 +41,8 @@ public class Game {
 		if (frameCount % pipeRate == 0) {
 			pipes.add(new Pipe());
 		}
-
+		
+		bird.update();
 	}
 
 	public void render(Graphics2D g) {
