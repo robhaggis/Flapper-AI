@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 public class Window extends JFrame implements Runnable {
 
 	// Params
-	public static final int WIDTH = 600;
+	public static final int WIDTH = 400;
 	public static final int HEIGHT = 600;
 	private static final String TITLE = "TITLE";
 	private static final double TARGET_UPS = 60;
@@ -91,6 +91,10 @@ public class Window extends JFrame implements Runnable {
 		// KeyListener Stuff here - example to detect up key pressed
 		if (keyListener.isKeyPressed(KeyEvent.VK_ESCAPE)) {
 			System.exit(0);
+		}
+		
+		if (keyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
+			game.spacePressed();
 		}
 
 	}

@@ -1,0 +1,39 @@
+package com.haggis.graphics;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+public class Bird {
+	int x = 64;
+	int y = Window.HEIGHT / 2;
+	int size = 32;
+	int lift = -4;
+	Color col = Color.white;
+
+	int gravity = 1;
+	int velocity = 0;
+
+	void update() {
+		velocity += gravity;
+		y += velocity;
+
+		if (y >= Window.HEIGHT-size) {
+			y = Window.HEIGHT-size;
+			velocity = 0;
+		}
+
+		if (y <= 0) {
+			y = 0;
+			velocity = 0;
+		}
+	}
+	
+	void up() {
+		velocity += lift;
+	}
+
+	void show(Graphics2D g) {
+		g.setColor(col);
+		g.fillOval(x, y, size, size);
+	}
+}
