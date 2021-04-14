@@ -45,6 +45,7 @@ public class Bird {
 
 	void up() {
 		velocity += lift;
+		velocity*=0.9;
 	}
 
 	void show(Graphics2D g) {

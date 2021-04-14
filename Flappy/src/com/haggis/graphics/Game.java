@@ -13,7 +13,7 @@ public class Game {
 	int frameCount = 0;
 	static int score = 0;
 	static int bestScore = 0;
-
+	
 	public void init() {
 		pipes.clear();
 		toRemove.clear();
@@ -58,6 +58,8 @@ public class Game {
 
 		bird.update();
 	}
+	
+	
 
 	public void render(Graphics2D g) {
 
