@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 public class Window extends JFrame implements Runnable {
 
 	// Params
-	public static final int WIDTH = 400;
+	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
 	private static final String TITLE = "TITLE";
 	private static final double TARGET_UPS = 60;

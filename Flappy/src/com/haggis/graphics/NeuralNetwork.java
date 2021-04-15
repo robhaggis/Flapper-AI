@@ -42,7 +42,7 @@ class NeuralNetwork {
 
 	float mut(float val, float rate) {
 		if (Math.random() < rate) {
-			return (float) (val + Rand.randomGaussian() * .1);
+			return (float) (val + Rand.randomGaussian() * .1f);
 		} else {
 			return val;
 		}

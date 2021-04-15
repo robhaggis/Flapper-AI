@@ -13,12 +13,12 @@ class Bird {
 	float r = 16;
 	Color c;
 
-	NeuralNetwork brain = new NeuralNetwork(4, 4, 2);
+	NeuralNetwork brain ;
 	float[] inputs = new float[4];
 	float[] outputs = new float[2];
 	Pipe closest = null;
-	int score;
-	int fitness;
+	float score;
+	float fitness;
 
 	Bird() {
 		pos = new Vector(50, Window.HEIGHT / 2);
@@ -29,10 +29,28 @@ class Bird {
 		int g = Rand.randomRange(50, 200);
 		int b = Rand.randomRange(50, 200);
 		c = new Color(r, g, b, 100);
+		brain = new NeuralNetwork(4,4,2);
+	}
+	
+	Bird(NeuralNetwork brainIn) {
+		pos = new Vector(50, Window.HEIGHT / 2);
+		vel = new Vector(0, 0);
+		acc = new Vector();
+
+		int r = Rand.randomRange(50, 200);
+		int g = Rand.randomRange(50, 200);
+		int b = Rand.randomRange(50, 200);
+		c = new Color(r, g, b, 100);
+		
+		this.brain = brainIn.copy();
 	}
 
 	void applyForce(Vector force) {
 		acc.add(force);
+	}
+	
+	void mutate() {
+		this.brain.mutate(0.1f);
 	}
 
 	void think(ArrayList<Pipe> pipes) {
