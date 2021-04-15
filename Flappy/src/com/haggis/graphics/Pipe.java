@@ -13,8 +13,8 @@ public class Pipe {
 
 	Pipe() {
 		x = Window.WIDTH + w;
-		top = Rand.randomRange(100, Window.HEIGHT / 2);
-		bottom = Rand.randomRange(100, Window.HEIGHT / 2);
+		top = Rand.randomRange(100, Window.HEIGHT / 2)-100;
+		bottom = Rand.randomRange(100, Window.HEIGHT / 2)+100;
 	}
 
 	boolean hits(Bird b) {
@@ -35,6 +35,6 @@ public class Pipe {
 		g.setColor(Color.GREEN);
 
 		g.fillRect(x, 0, w, top);
-		g.fillRect(x,Window.HEIGHT - bottom, w, Window.HEIGHT);
+		g.fillRect(x,Window.HEIGHT - bottom, w, bottom);
 	}
 }
