@@ -10,7 +10,7 @@ public class NN {
 	private double[][][] weights;
 	private double[][] bias;
 
-	private double[][] error_signal;
+	private double[][] error;
 	private double[][] output_derivative;
 
 	public NN(int... NETWORK_LAYER_SIZES) {
@@ -23,12 +23,12 @@ public class NN {
 		this.weights = new double[NETWORK_SIZE][][];
 		this.bias = new double[NETWORK_SIZE][];
 
-		this.error_signal = new double[NETWORK_SIZE][];
+		this.error = new double[NETWORK_SIZE][];
 		this.output_derivative = new double[NETWORK_SIZE][];
 
 		for (int i = 0; i < NETWORK_SIZE; i++) {
 			this.output[i] = new double[NETWORK_LAYER_SIZES[i]];
-			this.error_signal[i] = new double[NETWORK_LAYER_SIZES[i]];
+			this.error[i] = new double[NETWORK_LAYER_SIZES[i]];
 			this.output_derivative[i] = new double[NETWORK_LAYER_SIZES[i]];
 
 			this.bias[i] = NetworkTools.createRandomArray(NETWORK_LAYER_SIZES[i], -1, 1);
@@ -76,7 +76,7 @@ public class NN {
 
 	public void backPropError(double[] target) {
 		for (int neuron = 0; neuron < NETWORK_LAYER_SIZES[NETWORK_SIZE - 1]; neuron++) {
-			error_signal[NETWORK_SIZE
+			error[NETWORK_SIZE
 					- 1][neuron] = (output[NETWORK_SIZE - 1][neuron] - target[neuron])
 					* output_derivative[NETWORK_SIZE - 1][neuron];
 		}
@@ -86,9 +86,9 @@ public class NN {
 			for(int neuron = 0; neuron < NETWORK_LAYER_SIZES[layer]; neuron++) {
 				double sum = 0;
 				for(int nextNeuron = 0; nextNeuron < NETWORK_LAYER_SIZES[layer+1];nextNeuron++) {
-					sum += weights[layer+1][nextNeuron][neuron] * error_signal[layer+1][nextNeuron];
+					sum += weights[layer+1][nextNeuron][neuron] * error[layer+1][nextNeuron];
 				}
-				this.error_signal[layer][neuron] = sum * output_derivative[layer][neuron];
+				this.error[layer][neuron] = sum * output_derivative[layer][neuron];
 			}
 		}
 	}
@@ -98,10 +98,10 @@ public class NN {
 		for(int layer=1; layer < NETWORK_SIZE; layer++) {
 			for(int neuron = 0;neuron <NETWORK_LAYER_SIZES[layer];neuron++) {
 				for(int prevNeuron = 0; prevNeuron < NETWORK_LAYER_SIZES[layer-1];prevNeuron++) {
-					double delta = -eta * output[layer-1][prevNeuron] * error_signal[layer][neuron];
+					double delta = -eta * output[layer-1][prevNeuron] * error[layer][neuron];
 					weights[layer][neuron][prevNeuron] += delta;
 				}
-				double delta = -eta *error_signal[layer][neuron]; 
+				double delta = -eta *error[layer][neuron]; 
 				bias[layer][neuron] += delta;
 			}
 		}

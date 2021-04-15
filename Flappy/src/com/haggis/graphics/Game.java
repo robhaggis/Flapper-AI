@@ -9,7 +9,7 @@ import com.haggis.utils.Vector;
 
 public class Game {
 		
-	final int TOTAL = 100;
+	final int TOTAL = 250;
 
 	Bird b;
 	int wid = 400;
