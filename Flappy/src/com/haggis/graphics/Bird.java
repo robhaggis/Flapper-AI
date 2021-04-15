@@ -13,9 +13,9 @@ class Bird {
 	float r = 16;
 	Color c;
 
-	NN brain = new NN(4, 4, 1);
+	NN brain = new NN(4, 4, 2);
 	double[] inputs = new double[4];
-	double[] outputs = new double[1];
+	double[] outputs = new double[2];
 	Pipe closest = null;
 
 	Bird() {
@@ -26,7 +26,7 @@ class Bird {
 		int r = Rand.randomRange(50, 200);
 		int g = Rand.randomRange(50, 200);
 		int b = Rand.randomRange(50, 200);
-		c = new Color(r, g, b, 255);
+		c = new Color(r, g, b, 100);
 	}
 
 	void applyForce(Vector force) {
@@ -54,7 +54,7 @@ class Bird {
 
 		//Calculate output
 		outputs = brain.calculate(inputs);
-		if(outputs[0] > 0.5) {
+		if(outputs[1] > outputs[0]) {
 			this.applyForce(new Vector(0,-10));
 		}
 	}
@@ -77,15 +77,16 @@ class Bird {
 		}
 	}
 
-	void show(Graphics2D g) {
+	void render(Graphics2D g) {
+		//Draw strokw outline
+		g.setColor(new Color(0,0,0,100));
+		int sw = 2;
+		g.fillOval((int) pos.x-sw, (int) pos.y-sw, (int) (r * 2)+sw, (int) (r * 2)+sw);
+		
+		//Draw Body
 		g.setColor(c);
 		g.fillOval((int) pos.x, (int) pos.y, (int) r * 2, (int) r * 2);
 
-		g.setFont(new Font("Sans-Serif", Font.PLAIN, 12));
-		if (outputs[0] > 0) {
-			String o = Double.toString(outputs[0]);
-			g.drawString(o.substring(0, 5), pos.x, pos.y + 2 * r + 10);
-		}
 
 	}
 }
