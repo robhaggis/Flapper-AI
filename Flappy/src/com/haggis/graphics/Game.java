@@ -39,7 +39,7 @@ public class Game {
 		for (Pipe p : pipes) {
 			p.update();
 
-			p.collides(bird);
+			//p.collides(bird);
 			
 
 			if (p.x < -p.width) {
@@ -58,7 +58,7 @@ public class Game {
 	
 		}
 
-		bird.update();
+		bird.update(pipes);
 		score++;
 	}
 	
@@ -79,6 +79,10 @@ public class Game {
 	// Constructor
 	public Game() {
 		init();
+	}
+	
+	public void spacePressed() {
+		Bird.displayNEATinfo = !Bird.displayNEATinfo;
 	}
 
 	//Commented oout for neuroevolution

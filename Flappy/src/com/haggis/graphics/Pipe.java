@@ -22,8 +22,8 @@ public class Pipe {
 		x = Window.WIDTH;
 		width = 30;
 		
-		top = (int) (rng.nextInt((Window.HEIGHT / 2))-(Bird.size/1.5));
-		bottom = (int) (rng.nextInt((Window.HEIGHT / 2))-(Bird.size/1.5));
+		top = (int) 100+(rng.nextInt((Window.HEIGHT / 2))-(Bird.size*2))-100;
+		bottom = (int) (top + (Bird.size*2))+100;
 	}
 
 	void update() {
@@ -45,6 +45,6 @@ public class Pipe {
 	void show(Graphics2D g) {
 		g.setColor(col);
 		g.fillRect(x, 0, width, top);
-		g.fillRect(x, Window.HEIGHT - bottom, width, bottom);
+		g.fillRect(x, bottom, width, Window.HEIGHT);
 	}
 }
