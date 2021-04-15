@@ -2,49 +2,39 @@ package com.haggis.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.Random;
+
+import com.haggis.utils.Rand;
 
 public class Pipe {
-
-	Random rng = new Random(System.currentTimeMillis());
-
+	int x;
 	int top;
 	int bottom;
-	int speed;
-	int x;
-	int width;
+	int w = 40;
 
-
-	Color col = Color.WHITE;
-
-	public Pipe() {
-		speed = 2;
-		x = Window.WIDTH;
-		width = 30;
-		
-		top = (int) 100+(rng.nextInt((Window.HEIGHT / 2))-(Bird.size*2))-100;
-		bottom = (int) (top + (Bird.size*2))+100;
+	Pipe() {
+		x = Window.WIDTH + w;
+		top = Rand.randomRange(100, Window.HEIGHT / 2);
+		bottom = Rand.randomRange(100, Window.HEIGHT / 2);
 	}
 
-	void update() {
-		x -= speed;
-	}
-
-	boolean collides(Bird b) {
-
-		if (b.y < top || b.y + Bird.size > Window.HEIGHT - bottom) {
-			if (b.x + Bird.size > x && b.x < x + width) {
-				b.gameOver();
+	boolean hits(Bird b) {
+		if ((b.pos.x > x) && (b.pos.x < (x + w))) {
+			if ((b.pos.y < (top + b.r)) || (b.pos.y > (Window.HEIGHT - bottom - b.r))) {
 				return true;
 			}
 		}
 		return false;
-
 	}
 
-	void show(Graphics2D g) {
-		g.setColor(col);
-		g.fillRect(x, 0, width, top);
-		g.fillRect(x, bottom, width, Window.HEIGHT);
+	void update() {
+		x -= 3;
+	}
+
+	void render(Graphics2D g) {
+
+		g.setColor(Color.WHITE);
+
+		g.fillRect(x, 0, w, top);
+		g.fillRect(x,Window.HEIGHT - bottom, w, Window.HEIGHT);
 	}
 }

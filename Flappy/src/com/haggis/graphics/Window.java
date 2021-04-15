@@ -92,11 +92,6 @@ public class Window extends JFrame implements Runnable {
 		if (keyListener.isKeyPressed(KeyEvent.VK_ESCAPE)) {
 			System.exit(0);
 		}
-	 
-		if (keyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
-			game.spacePressed();
-		}
-
 	}
 
 	// Game loop Timing
