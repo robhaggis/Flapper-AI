@@ -9,27 +9,28 @@ public class Game {
 	static Bird bird;
 	static ArrayList<Pipe> pipes = new ArrayList<>();
 	static ArrayList<Pipe> toRemove = new ArrayList<>();
-	
+
 	int frameCount = 0;
 	static int score = 0;
 	static int bestScore = 0;
-	
+
 	int pipeRate = 120;
-	
+
 	public void init() {
 		pipes.clear();
 		toRemove.clear();
-       
+
 		bird = new Bird();
 		pipes.add(new Pipe());
 	}
 
 	public static void reset() {
-		pipes.clear();      
+		pipes.clear();
 		toRemove.clear();
 		bird = new Bird();
 		pipes.add(new Pipe());
-		if(bestScore < score) bestScore = score;
+		if (bestScore < score)
+			bestScore = score;
 		score = 0;
 	}
 
@@ -39,8 +40,7 @@ public class Game {
 		for (Pipe p : pipes) {
 			p.update();
 
-			//p.collides(bird);
-			
+			p.collides(bird);
 
 			if (p.x < -p.width) {
 				toRemove.add(p);
@@ -55,14 +55,12 @@ public class Game {
 
 		if (frameCount % pipeRate == 0) {
 			pipes.add(new Pipe());
-	
+
 		}
 
 		bird.update(pipes);
 		score++;
 	}
-	
-	
 
 	public void render(Graphics2D g) {
 
@@ -80,12 +78,12 @@ public class Game {
 	public Game() {
 		init();
 	}
-	
+
 	public void spacePressed() {
 		Bird.displayNEATinfo = !Bird.displayNEATinfo;
 	}
 
-	//Commented oout for neuroevolution
+	// Commented oout for neuroevolution
 //	public void spacePressed() {
 //		bird.up();
 //	}
