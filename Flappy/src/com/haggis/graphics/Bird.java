@@ -45,15 +45,15 @@ public class Bird {
 		}
 
 		double[] inputs = new double[4];
-//		inputs[0] = this.y / Window.HEIGHT;
-//		inputs[1] = closest.top/Window.HEIGHT;
-//		inputs[2] = closest.bottom/Window.HEIGHT;
-//		inputs[3] = closest.x/Window.WIDTH;
-
-		inputs[0] = this.y;
-		inputs[1] = closest.top;
-		inputs[2] = closest.bottom;
-		inputs[3] = closest.x;
+		inputs[0] = this.y / Window.HEIGHT;
+		inputs[1] = closest.top/Window.HEIGHT;
+		inputs[2] = closest.bottom/Window.HEIGHT;
+		inputs[3] = closest.x/Window.WIDTH;
+//
+//		inputs[0] = this.y;
+//		inputs[1] = closest.top;
+//		inputs[2] = closest.bottom;
+//		inputs[3] = closest.x;
 
 		output = brain.calculate(inputs);
 		if (output[0] > 0.5) {
