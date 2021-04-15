@@ -17,9 +17,8 @@ public class Game {
 	int pipeRate = 120;
 
 	public void init() {
-		pipes.clear();
+		//pipes.clear();
 		toRemove.clear();
-
 		bird = new Bird();
 		pipes.add(new Pipe());
 	}
@@ -40,7 +39,7 @@ public class Game {
 		for (Pipe p : pipes) {
 			p.update();
 
-			p.collides(bird);
+			//p.collides(bird);
 
 			if (p.x < -p.width) {
 				toRemove.add(p);
