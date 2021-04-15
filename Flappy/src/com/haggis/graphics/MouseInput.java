@@ -12,8 +12,8 @@ public class MouseInput implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-	
-		game.flap();
+	//Commented out for NEAT
+//		game.flap();
 	}
 
 	@Override

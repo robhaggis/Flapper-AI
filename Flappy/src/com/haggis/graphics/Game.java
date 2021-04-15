@@ -35,21 +35,21 @@ public class Game {
 		}
 
 		b.update();
+		b.think(pipes);
 		boolean safe = true;
 		
 		for (int i = pipes.size() - 1; i >= 0; i--) {
 			Pipe p = pipes.get(i);
 			p.update();
 
-			if (p.hits(b)) {
-				init();
-				return;
-			}
+//			if (p.hits(b)) {
+//				init();
+//				return;
+//			}
 			
 			if (p.x < -p.w) {
 				pipes.remove(i);
 			}
-
 			score++;
 		}
 		frameCount++;
@@ -58,20 +58,25 @@ public class Game {
 
 
 	
-	void flap() {
-		b.applyForce(new Vector(0,-10));
-	}
+	//Commented out for NEAT
+//	void flap() {
+//		b.applyForce(new Vector(0,-10));
+//	}
+	
+	
 	
 	void render(Graphics2D g) {
-		b.show(g);
+		
 		for (Pipe p : pipes) {
 			p.render(g);
 		}
-		g.setColor(new Color(0, 255, 0));
-		Font font = new Font("Sans-Serif", Font.PLAIN, 16);
-		g.setFont(font);
+		g.setColor(Color.black);
+		g.setFont(new Font("Sans-Serif", Font.PLAIN, 16));
 		g.drawString("Score: " + score, Window.WIDTH / 2, 50);
 		g.drawString("Score: " + bestScore, Window.WIDTH / 2, 75);
+		
+		
+		b.show(g);
 	}
 	
 	public Game() {

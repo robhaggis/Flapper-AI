@@ -18,7 +18,7 @@ public class Pipe {
 	}
 
 	boolean hits(Bird b) {
-		if ((b.pos.x > x) && (b.pos.x < (x + w))) {
+		if ((b.pos.x+(b.r*2) > x) && (b.pos.x < (x + w))) {
 			if ((b.pos.y < (top + b.r)) || (b.pos.y > (Window.HEIGHT - bottom - b.r))) {
 				return true;
 			}
@@ -32,7 +32,7 @@ public class Pipe {
 
 	void render(Graphics2D g) {
 
-		g.setColor(Color.WHITE);
+		g.setColor(Color.GREEN);
 
 		g.fillRect(x, 0, w, top);
 		g.fillRect(x,Window.HEIGHT - bottom, w, Window.HEIGHT);

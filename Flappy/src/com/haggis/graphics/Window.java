@@ -73,7 +73,7 @@ public class Window extends JFrame implements Runnable {
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
 		// Clear screen between frames
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		// Update Graphics Buffer

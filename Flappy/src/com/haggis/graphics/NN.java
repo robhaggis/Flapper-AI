@@ -31,11 +31,11 @@ public class NN {
 			this.error_signal[i] = new double[NETWORK_LAYER_SIZES[i]];
 			this.output_derivative[i] = new double[NETWORK_LAYER_SIZES[i]];
 
-			this.bias[i] = NetworkTools.createRandomArray(NETWORK_LAYER_SIZES[i], 0.3, 0.7);
+			this.bias[i] = NetworkTools.createRandomArray(NETWORK_LAYER_SIZES[i], -1, 1);
 
 			if (i > 0) {
 				this.weights[i] = NetworkTools.createRandomArray(NETWORK_LAYER_SIZES[i], NETWORK_LAYER_SIZES[i - 1],
-						-0.3, 0.5);
+						-1, 1);
 			}
 		}
 	}
@@ -62,38 +62,6 @@ public class NN {
 
 		return output[NETWORK_SIZE - 1];
 	}
-	
-	public void train(TrainSet set, int loops, int batch_size) {
-		if(set.INPUT_SIZE != INPUT_SIZE || set.OUTPUT_SIZE != OUTPUT_SIZE) return;
-		
-		for(int i=0;i<loops;i++) {
-			TrainSet batch = set.extractBatch(batch_size);
-			for(int b = 0; b<batch_size;b++) {
-				this.train(batch.getInput(b), batch.getOutput(b), 0.3);
-			}
-			//System.out.println(MSE(batch));
-		}
-	}
-	
-	public double MSE(double[] input, double[] target) {
-		if(input.length != INPUT_SIZE || target.length != OUTPUT_SIZE) return 0;
-		calculate(input);
-		double v = 0;
-		for(int i=0;i<target.length;i++) {
-			v += (target[i] - output[NETWORK_SIZE-1][i]) * (target[i] - output[NETWORK_SIZE-1][i]);
-		}
-		return v / (2d* target.length);
-	}
-	
-	public double MSE(TrainSet set) {
-		double v = 0;
-		for(int i=0;i<set.size();i++) {
-		
-				v+= MSE(set.getInput(i), set.getOutput(i));
-		}
-		return v / set.size();
-	}
-	
 
 	public void train(double[] input, double[] target, double eta) {
 		if (input.length != INPUT_SIZE || target.length != OUTPUT_SIZE) {
