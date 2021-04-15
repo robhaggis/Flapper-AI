@@ -9,21 +9,23 @@ public class Game {
 	static Bird bird;
 	static ArrayList<Pipe> pipes = new ArrayList<>();
 	static ArrayList<Pipe> toRemove = new ArrayList<>();
-	int pipeRate = 150;
+	
 	int frameCount = 0;
 	static int score = 0;
 	static int bestScore = 0;
 	
+	int pipeRate = 120;
+	
 	public void init() {
 		pipes.clear();
 		toRemove.clear();
-
+       
 		bird = new Bird();
 		pipes.add(new Pipe());
 	}
 
 	public static void reset() {
-		pipes.clear();
+		pipes.clear();      
 		toRemove.clear();
 		bird = new Bird();
 		pipes.add(new Pipe());
@@ -37,8 +39,8 @@ public class Game {
 		for (Pipe p : pipes) {
 			p.update();
 
-			if (p.collides(bird)) {
-			}
+			p.collides(bird);
+			
 
 			if (p.x < -p.width) {
 				toRemove.add(p);
@@ -53,10 +55,11 @@ public class Game {
 
 		if (frameCount % pipeRate == 0) {
 			pipes.add(new Pipe());
-			score++;
+	
 		}
 
 		bird.update();
+		score++;
 	}
 	
 	

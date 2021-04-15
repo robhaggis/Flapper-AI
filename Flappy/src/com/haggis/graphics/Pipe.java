@@ -8,28 +8,39 @@ public class Pipe {
 
 	Random rng = new Random(System.currentTimeMillis());
 
-	int top = rng.nextInt(Window.HEIGHT / 2);
-	int bottom = rng.nextInt(Window.HEIGHT / 2);
-	int speed = 2;
-	int x = Window.WIDTH;
-	int width = 20;
+	int top;
+	int bottom;
+	int speed;
+	int x;
+	int width;
+
 
 	Color col = Color.WHITE;
+
+	public Pipe() {
+		speed = 2;
+		x = Window.WIDTH;
+		width = 30;
+		
+		top = (int) (rng.nextInt((Window.HEIGHT / 2))-(Bird.size/1.5));
+		bottom = (int) (rng.nextInt((Window.HEIGHT / 2))-(Bird.size/1.5));
+	}
 
 	void update() {
 		x -= speed;
 	}
 
+	@SuppressWarnings("static-access")
 	boolean collides(Bird b) {
 
-		if (b.y < top || b.y+b.size > Window.HEIGHT - bottom) {
-			if (b.x +b.size> x && b.x < x + width) {
+		if (b.y < top || b.y + Bird.size > Window.HEIGHT - bottom) {
+			if (b.x + Bird.size > x && b.x < x + width) {
 				b.gameOver();
 				return true;
 			}
 		}
 		return false;
-		
+
 	}
 
 	void show(Graphics2D g) {

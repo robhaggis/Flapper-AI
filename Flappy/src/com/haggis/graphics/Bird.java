@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 public class Bird {
 	int x = 64;
 	int y = Window.HEIGHT / 2;
-	int size = 32;
+	static int size = 32;
 	int lift = -3;
-	Color col = Color.white;
+	Color col = Color.green;
 
 	int gravity = 1;
 
