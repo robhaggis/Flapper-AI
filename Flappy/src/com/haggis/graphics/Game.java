@@ -9,7 +9,7 @@ import com.haggis.utils.Vector;
 
 public class Game {
 		
-	final int TOTAL = 250;
+	final static int POPULATIONSIZE = 250;
 
 	Bird b;
 	int wid = 400;
@@ -19,16 +19,28 @@ public class Game {
 	boolean jumping = false;
 	static Vector gravity = new Vector(0f, 0.5f);
 	ArrayList<Pipe> pipes = new ArrayList<Pipe>();
-	ArrayList<Bird> birds = new ArrayList<Bird>();
+	ArrayList<Bird> birds= null;
+	ArrayList<Bird> savedBirds = null;
 	int frameCount;
 
 	void init() {
 		pipes.clear();
-		birds.clear();
+		if(birds==null) {
+			birds =  new ArrayList<Bird>();
+			for(int i=0;i<POPULATIONSIZE;i++) {
+				birds.add(new Bird());
+			}
+			savedBirds  = new ArrayList<Bird>();
+		}else {
+			birds.clear();
+			savedBirds.clear();
+			for(int i=0;i<POPULATIONSIZE;i++) {
+				birds.add(new Bird());
+			}
+		}
 		
-		for(int i=0;i<TOTAL;i++) {
-			birds.add(new Bird());
-		}	
+		
+			
 		pipes.add(new Pipe());
 		if(score> bestScore) bestScore = score;
 		score = 0;
@@ -48,10 +60,12 @@ public class Game {
 
 			for(int j = birds.size()-1; j>=0;j--) {
 				if (pipes.get(i).hits(birds.get(j))) {
+					
+					savedBirds.add(birds.get(j));
 					birds.remove(j);
+					
 				}
 			}
-			
 			
 			if (pipes.get(i).x < -pipes.get(i).w) {
 				pipes.remove(i);
@@ -65,7 +79,7 @@ public class Game {
 			b.think(pipes);
 		}
 		
-		
+		//Reset
 		if(birds.size()==0) {
 			init();
 			return;
@@ -91,7 +105,9 @@ public class Game {
 		g.setColor(Color.black);
 		g.setFont(new Font("Sans-Serif", Font.PLAIN, 16));
 		g.drawString("Score: " + score, Window.WIDTH / 2, 50);
-		g.drawString("Best: " + bestScore, Window.WIDTH / 2, 75);
+		g.drawString("Best: " + bestScore, Window.WIDTH / 2, 65);
+		g.drawString("BirdCount:" + birds.size(), Window.WIDTH/2, 80);
+		g.drawString("DeadBirds:" + savedBirds.size(), Window.WIDTH/2, 95);
 		
 		for(Bird b: birds) {
 			b.render(g);

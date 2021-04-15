@@ -13,10 +13,12 @@ class Bird {
 	float r = 16;
 	Color c;
 
-	NN brain = new NN(4, 4, 2);
-	double[] inputs = new double[4];
-	double[] outputs = new double[2];
+	NeuralNetwork brain = new NeuralNetwork(4, 4, 2);
+	float[] inputs = new float[4];
+	float[] outputs = new float[2];
 	Pipe closest = null;
+	int score;
+	int fitness;
 
 	Bird() {
 		pos = new Vector(50, Window.HEIGHT / 2);
@@ -53,13 +55,15 @@ class Bird {
 		inputs[1] = closest.x;
 
 		//Calculate output
-		outputs = brain.calculate(inputs);
+		outputs = brain.feedForward(inputs);
 		if(outputs[1] > outputs[0]) {
 			this.applyForce(new Vector(0,-10));
 		}
 	}
 
 	void update() {
+		score++;
+		
 		applyForce(Game.gravity);
 		pos.add(vel);
 		vel.add(acc);
