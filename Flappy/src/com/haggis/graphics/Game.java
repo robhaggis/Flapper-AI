@@ -81,8 +81,9 @@ public class Game {
 		init();
 	}
 
-	public void spacePressed() {
-		bird.up();
-	}
+	//Commented oout for neuroevolution
+//	public void spacePressed() {
+//		bird.up();
+//	}
 
 }

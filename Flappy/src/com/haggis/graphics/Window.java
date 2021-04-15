@@ -92,10 +92,11 @@ public class Window extends JFrame implements Runnable {
 		if (keyListener.isKeyPressed(KeyEvent.VK_ESCAPE)) {
 			System.exit(0);
 		}
-		
-		if (keyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
-			game.spacePressed();
-		}
+	
+		//Commented out for NeuroEvolution
+//		if (keyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
+//			game.spacePressed();
+//		}
 
 	}
 

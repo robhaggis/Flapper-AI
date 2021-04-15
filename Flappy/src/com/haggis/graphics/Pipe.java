@@ -30,7 +30,6 @@ public class Pipe {
 		x -= speed;
 	}
 
-	@SuppressWarnings("static-access")
 	boolean collides(Bird b) {
 
 		if (b.y < top || b.y + Bird.size > Window.HEIGHT - bottom) {

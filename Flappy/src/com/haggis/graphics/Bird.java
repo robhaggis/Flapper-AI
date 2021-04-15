@@ -4,23 +4,30 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Bird {
-	int x = 64;
-	int y = Window.HEIGHT / 2;
-	static int size = 32;
-	int lift = -3;
-	Color col = Color.green;
-
-	int gravity = 1;
+	int x,y;
+	static int size;
+	int lift;
+	Color col;
+	final int GRAVITY = 1;
 
 	int velocity = 0;
-	int maxSpeed = 3;
 
 	boolean dead = false;
+	
+	NN brain;
+	
+	public Bird() {
+		x = 64;
+		y = Window.HEIGHT/2;
+		size = 32;
+		lift = -3;	
+		col = Color.green;
+	}
 
 	void update() {
 
 		if (!dead) {
-			velocity += gravity;
+			velocity += GRAVITY;
 			y += velocity;
 
 			if (y >= Window.HEIGHT - size) {
