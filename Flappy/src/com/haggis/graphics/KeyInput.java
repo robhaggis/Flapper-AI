@@ -8,11 +8,12 @@ import java.awt.event.KeyListener;
 public class KeyInput implements KeyListener{
 
 	private boolean[] keyPressed = new boolean[128];
+	private boolean[] keyTyped = new boolean[128];
 	
 	
 	@Override
 	public void keyTyped(KeyEvent e) {		
-		keyPressed[e.getKeyCode()]=true;
+		keyTyped[e.getKeyCode()]=true;
 	}
 
 	@Override
@@ -28,6 +29,10 @@ public class KeyInput implements KeyListener{
 	
 	public boolean isKeyPressed(int keyCode) {
 		return keyPressed[keyCode];
+	}
+	
+	public boolean isKeyTyped(int keyCode) {
+		return keyTyped[keyCode];
 	}
 	
 }

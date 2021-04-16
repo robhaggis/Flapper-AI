@@ -2,50 +2,46 @@ package com.haggis.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.Random;
 
-public class Pipe {
+import com.haggis.utils.Rand;
 
-	Random rng = new Random(System.currentTimeMillis());
+public class Pipe{
 
-	int top;
-	int bottom;
-	int speed;
-	int x;
-	int width;
+  float top;
+  float bottom;
+  float x;
+  float w;
+  float speed;
+  float spacing;
 
+  public Pipe(){
+    spacing = 200;
+    top = Rand.randomRange(Window.HEIGHT/ 6, (float) (.75 * Window.HEIGHT));
+    bottom = Window.HEIGHT - (top + spacing);
+    w = 80;
+    x = Window.WIDTH;
+    speed = 3;
+  }
 
-	Color col = Color.WHITE;
+  public void render(Graphics2D g){
+    g.setColor(Color.GREEN);
+    g.fillRect((int)x,0, (int)w,(int) top);
+    g.fillRect((int)x, (int) (Window.HEIGHT-bottom),(int) w,(int) bottom);
+  }
 
-	public Pipe() {
-		speed = 2;
-		x = Window.WIDTH;
-		width = 30;
-		
-		top = (int) (rng.nextInt((Window.HEIGHT / 2))-(Bird.size/1.5));
-		bottom = (int) (rng.nextInt((Window.HEIGHT / 2))-(Bird.size/1.5));
-	}
+  public void update(){
+    x -= speed;
+  }
 
-	void update() {
-		x -= speed;
-	}
+  public boolean offscreen(){
+    return x < -w;
+  }
 
-	@SuppressWarnings("static-access")
-	boolean collides(Bird b) {
-
-		if (b.y < top || b.y + Bird.size > Window.HEIGHT - bottom) {
-			if (b.x + Bird.size > x && b.x < x + width) {
-				b.gameOver();
-				return true;
-			}
-		}
-		return false;
-
-	}
-
-	void show(Graphics2D g) {
-		g.setColor(col);
-		g.fillRect(x, 0, width, top);
-		g.fillRect(x, Window.HEIGHT - bottom, width, bottom);
-	}
+  public boolean hit(Bird b){
+    if (b.pos.y < top+b.r || b.pos.y+b.r > Window.HEIGHT-bottom){
+      if (b.pos.x+b.r > x && b.pos.x < (x + w)+b.r)
+        return true;
+    }
+    return false;
+  }
 }

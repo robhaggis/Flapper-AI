@@ -10,9 +10,9 @@ import javax.swing.JFrame;
 public class Window extends JFrame implements Runnable {
 
 	// Params
-	public static final int WIDTH = 400;
+	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
-	private static final String TITLE = "TITLE";
+	private static final String TITLE = "Flapper AI - NEAT";
 	private static final double TARGET_UPS = 60;
 
 	public static float fpsCounter = 0f;
@@ -35,7 +35,7 @@ public class Window extends JFrame implements Runnable {
 		this.setTitle(TITLE);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setUndecorated(true);
+		this.setUndecorated(false);
 		this.requestFocus();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -73,7 +73,7 @@ public class Window extends JFrame implements Runnable {
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
 		// Clear screen between frames
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		// Update Graphics Buffer
@@ -92,11 +92,6 @@ public class Window extends JFrame implements Runnable {
 		if (keyListener.isKeyPressed(KeyEvent.VK_ESCAPE)) {
 			System.exit(0);
 		}
-		
-		if (keyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
-			game.spacePressed();
-		}
-
 	}
 
 	// Game loop Timing
