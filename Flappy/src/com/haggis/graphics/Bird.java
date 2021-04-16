@@ -1,114 +1,92 @@
 package com.haggis.graphics;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.haggis.utils.Rand;
 import com.haggis.utils.Vector;
 
-class Bird {
-	Vector pos, vel, acc;
-	float r = 16;
-	Color c;
+class Bird{
+  Vector pos, vel, acc;
+  Vector gravity, jump;
+  float r = 16;
+  float d = r * 2;
+  boolean alive = true;
+  float[] inputs = new float[5];
+  float score = 0;
+  float fitness = 0;
+  NeuralNetwork brain;
+  
+  Color c;
 
-	NeuralNetwork brain ;
-	float[] inputs = new float[4];
-	float[] outputs = new float[2];
-	Pipe closest = null;
-	float score;
-	float fitness;
+  public Bird(){
+    pos = new Vector(64, Window.HEIGHT/2);
+    vel = new Vector();
+    gravity = new Vector(0, .8f);
+    jump = new Vector(0, 12);
+    score = 0;
+    fitness = 0;
+    brain = new NeuralNetwork(5, 65, 2);
+    
+  }
 
-	Bird() {
-		pos = new Vector(50, Window.HEIGHT / 2);
-		vel = new Vector(0, 0);
-		acc = new Vector();
-
-		int r = Rand.randomRange(50, 200);
-		int g = Rand.randomRange(50, 200);
-		int b = Rand.randomRange(50, 200);
-		c = new Color(r, g, b, 100);
-		brain = new NeuralNetwork(4,4,2);
-	}
-	
-	Bird(NeuralNetwork brainIn) {
-		pos = new Vector(50, Window.HEIGHT / 2);
-		vel = new Vector(0, 0);
-		acc = new Vector();
-
-		int r = Rand.randomRange(50, 200);
-		int g = Rand.randomRange(50, 200);
-		int b = Rand.randomRange(50, 200);
-		c = new Color(r, g, b, 100);
-		
-		this.brain = brainIn.copy();
-	}
-
-	void applyForce(Vector force) {
-		acc.add(force);
-	}
-	
-	void mutate() {
-		this.brain.mutate(0.1f);
-	}
-
-	void think(ArrayList<Pipe> pipes) {
-		
-		//Calculate closest pipe
-		closest = pipes.get(0);
-		double closestD = Double.POSITIVE_INFINITY;
-		for(Pipe p : pipes) {
-			double d = p.x - pos.x;
-			if(d < closestD && d >0) {
-				closest = p;
-				closestD = d;
-			}
-		}
-			
-		//Update inputs
-		inputs[0] = pos.y;
-		inputs[1] = closest.top;
-		inputs[1] = closest.bottom;
-		inputs[1] = closest.x;
-
-		//Calculate output
-		outputs = brain.feedForward(inputs);
-		if(outputs[1] > outputs[0]) {
-			this.applyForce(new Vector(0,-10));
-		}
-	}
-
-	void update() {
-		score++;
-		
-		applyForce(Game.gravity);
-		pos.add(vel);
-		vel.add(acc);
-		vel.limit(4);
-		acc.multiply(0);
-
-		if (pos.y + r * 2 >= Window.HEIGHT) {
-			pos.y = Window.HEIGHT - r * 2 - 1;
-			vel.multiply(0);
-		}
-
-		if (pos.y <= 0) {
-			pos.y = 1;
-			vel.multiply(0);
-		}
-	}
-
-	void render(Graphics2D g) {
-		//Draw strokw outline
-		g.setColor(new Color(0,0,0,100));
-		int sw = 2;
-		g.fillOval((int) pos.x-sw, (int) pos.y-sw, (int) (r * 2)+sw, (int) (r * 2)+sw);
-		
-		//Draw Body
-		g.setColor(c);
-		g.fillOval((int) pos.x, (int) pos.y, (int) r * 2, (int) r * 2);
+  public Bird(NeuralNetwork b){
+    pos = new Vector(64, Window.HEIGHT/2);
+    vel = new Vector();
+    gravity = new Vector(0, .8f);
+    jump = new Vector(0, -12);
+    score = 0;
+    fitness = 0;
+    brain = b.copy();
 
 
-	}
+  }
+
+  void mutate(){
+    brain.mutate(.01f);
+  }
+
+  void think(ArrayList<Pipe> pipe){
+    Pipe closest = null;
+    float recordD = Float.POSITIVE_INFINITY;
+    for (int i = 0; i < pipe.size(); i++){
+      Pipe p = pipe.get(i);
+      float d = (p.x+p.w) - pos.x;
+      if (d < recordD && d > 0){
+        closest = pipe.get(i);
+        recordD = d;
+      }
+    }
+
+
+    inputs[0] = pos.y / Window.HEIGHT;
+    inputs[1] = vel.y / 10;
+    inputs[2] = closest.top / Window.HEIGHT;  
+    inputs[3] = closest.bottom / Window.WIDTH;
+    inputs[4] = closest.x / Window.WIDTH;
+    float[] guess = brain.feedForward(inputs);
+    if (guess[0] > guess[1]){
+      jump();
+    }
+  }
+
+  void render(Graphics2D g){
+    g.setColor(new Color(255,0,0,100));
+    g.fillOval((int)pos.x, (int)pos.y,(int) d, (int)d);
+  }
+
+  void update(){
+    score++;
+    vel.add(gravity);
+    pos.add(vel);
+  }
+
+  void jump(){
+    vel.add(jump);
+  }
+
+  boolean dead(){
+    return (pos.y+r > Window.HEIGHT || pos.y < r);
+  }
 }

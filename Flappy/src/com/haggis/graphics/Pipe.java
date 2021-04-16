@@ -5,36 +5,43 @@ import java.awt.Graphics2D;
 
 import com.haggis.utils.Rand;
 
-public class Pipe {
-	int x;
-	int top;
-	int bottom;
-	int w = 40;
+public class Pipe{
 
-	Pipe() {
-		x = Window.WIDTH + w;
-		top = Rand.randomRange(100, Window.HEIGHT / 2)-100;
-		bottom = Rand.randomRange(100, Window.HEIGHT / 2)+100;
-	}
+  float top;
+  float bottom;
+  float x;
+  float w;
+  float speed;
+  float spacing;
 
-	boolean hits(Bird b) {
-		if ((b.pos.x+(b.r*2) > x) && (b.pos.x < (x + w))) {
-			if ((b.pos.y < (top + b.r)) || (b.pos.y > (Window.HEIGHT - bottom - b.r))) {
-				return true;
-			}
-		}
-		return false;
-	}
+  public Pipe(){
+    spacing = 125;
+    top = Rand.randomRange(Window.HEIGHT/ 6, (float) (.75 * Window.HEIGHT));
+    bottom = Window.HEIGHT - (top + spacing);
+    w = 50;
+    x = Window.WIDTH;
+    speed = 3;
+  }
 
-	void update() {
-		x -= 3;
-	}
+  public void render(Graphics2D g){
+    g.setColor(Color.GREEN);
+    g.fillRect((int)x,0, (int)w,(int) top);
+    g.fillRect((int)x, (int) (Window.HEIGHT-bottom),(int) w,(int) bottom);
+  }
 
-	void render(Graphics2D g) {
+  public void update(){
+    x -= speed;
+  }
 
-		g.setColor(Color.GREEN);
+  public boolean offscreen(){
+    return x < -w;
+  }
 
-		g.fillRect(x, 0, w, top);
-		g.fillRect(x,Window.HEIGHT - bottom, w, bottom);
-	}
+  public boolean hit(Bird b){
+    if (b.pos.y < top+b.r || b.pos.y+b.r > Window.HEIGHT-bottom){
+      if (b.pos.x+b.r > x && b.pos.x < (x + w)+b.r)
+        return true;
+    }
+    return false;
+  }
 }

@@ -5,7 +5,7 @@ import com.haggis.utils.Rand;
 class NeuralNetwork {
 	int inputNodes, hiddenNodes, outputNodes;
 
-	float LearningRate = .1f;
+	float LearningRate = .2f;
 
 	Matrix IHWeights, HOWeights, Hbias, Obias, input, hidden, output;
 
