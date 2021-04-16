@@ -27,7 +27,7 @@ class Bird{
     jump = new Vector(0, 12);
     score = 0;
     fitness = 0;
-    brain = new NeuralNetwork(5, 65, 2);
+    brain = new NeuralNetwork(5, 64, 2);
     
   }
 
@@ -72,6 +72,8 @@ class Bird{
   }
 
   void render(Graphics2D g){
+	g.setColor(new Color(1,1,1,100));
+	g.fillOval((int)pos.x-1, (int)pos.y-1,(int) d+1, (int)d+1);
     g.setColor(new Color(255,0,0,100));
     g.fillOval((int)pos.x, (int)pos.y,(int) d, (int)d);
   }

@@ -12,8 +12,9 @@ public class MouseInput implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-	//Commented out for NEAT
-//		game.flap();
+	
+		game.adjustSpeed();
+		
 	}
 
 	@Override

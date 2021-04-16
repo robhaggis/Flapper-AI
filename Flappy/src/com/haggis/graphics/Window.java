@@ -12,7 +12,7 @@ public class Window extends JFrame implements Runnable {
 	// Params
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
-	private static final String TITLE = "TITLE";
+	private static final String TITLE = "Flapper AI - NEAT";
 	private static final double TARGET_UPS = 60;
 
 	public static float fpsCounter = 0f;
@@ -35,7 +35,7 @@ public class Window extends JFrame implements Runnable {
 		this.setTitle(TITLE);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setUndecorated(true);
+		this.setUndecorated(false);
 		this.requestFocus();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);

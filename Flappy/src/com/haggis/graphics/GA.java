@@ -3,7 +3,6 @@ package com.haggis.graphics;
 public class GA {
 
 	static void nextGeneration() {
-		Game.Gens++;
 		calculateFitness();
 		for (int i = 0; i < Game.TOTAL; i++) {
 			Game.population.add(pickOne());

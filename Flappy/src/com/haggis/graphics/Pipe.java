@@ -15,10 +15,10 @@ public class Pipe{
   float spacing;
 
   public Pipe(){
-    spacing = 125;
+    spacing = 200;
     top = Rand.randomRange(Window.HEIGHT/ 6, (float) (.75 * Window.HEIGHT));
     bottom = Window.HEIGHT - (top + spacing);
-    w = 50;
+    w = 80;
     x = Window.WIDTH;
     speed = 3;
   }

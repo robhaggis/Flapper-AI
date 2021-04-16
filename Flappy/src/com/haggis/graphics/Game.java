@@ -5,15 +5,19 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import com.haggis.utils.Rand;
+
 public class Game {
 
 	static ArrayList<Bird> population;
 	static ArrayList<Bird> saved;
 	ArrayList<Pipe> pipes;
 	static float TOTAL;
-	static int Gens;
+	static int Gens = 1;
 	float counter, bestScore;
 	Pipe p;
+
+	int cycles = 1;
 
 	void init() {
 		TOTAL = 500;
@@ -24,57 +28,59 @@ public class Game {
 			population.add(new Bird());
 		}
 	}
+	
+	void adjustSpeed() {
+		if(cycles == 100) cycles = 1;
+		else if(cycles == 1) cycles = 10;
+		else if (cycles ==10) cycles=100;
+	}
 
 	void update() {
 
-		// Spawn new pipes
-		if (counter % 200 == 0) {
-			pipes.add(new Pipe());
-		}
-
-		// Update pipes and collision check
-		for (int i = pipes.size() - 1; i >= 0; i--) {
-			Pipe p = pipes.get(i);
-			p.update();
-			if (p.offscreen()) {
-				pipes.remove(i);
+		for (int n = 0; n < cycles; n++) {
+			// Spawn new pipes
+			if (counter % 150 == 0) {
+				pipes.add(new Pipe());
 			}
 
-			for (int j = population.size() - 1; j >= 0; j--) {
-				Bird b = population.get(j);
-				if (p.hit(b) || b.dead()) {
-					saved.add(b);
-					population.remove(j);
+			// Update pipes and collision check
+			for (int i = pipes.size() - 1; i >= 0; i--) {
+				Pipe p = pipes.get(i);
+				p.update();
+				if (p.offscreen()) {
+					pipes.remove(i);
+				}
+
+				for (int j = population.size() - 1; j >= 0; j--) {
+					Bird b = population.get(j);
+					if (p.hit(b) || b.dead()) {
+						saved.add(b);
+						population.remove(j);
+					}
 				}
 			}
+
+			if (population.size() == 0) {
+
+				if (counter > bestScore) {
+					bestScore = counter;
+				}
+				counter = 0;
+				GA.nextGeneration();
+				pipes.clear();
+				pipes.add(new Pipe());
+				Gens++;
+			}
+
+			for (Bird b : population) {
+				b.update();
+				b.think(pipes);
+			}
+			counter++;
+
 		}
 
-		if (population.size() == 0) {
-			
-			if(counter > bestScore)bestScore = counter;
-			counter = 0;
-			GA.nextGeneration();
-			pipes.clear();
-			pipes.add(new Pipe());
-		}
-
-		for (Bird b : population) {
-			b.update();
-			b.think(pipes);
-		}
-
-//		  for (int i = pipes.size()-1; i >= 0; i--)
-//		  {
-//		    Pipe p = pipes.get(i);;
-//		  }
-
-		counter++;
 	}
-
-	// Commented out for NEAT
-//	void flap() {
-//		b.applyForce(new Vector(0,-10));
-//	}
 
 	void render(Graphics2D g) {
 
@@ -84,19 +90,21 @@ public class Game {
 
 		// Draw NEAT info
 		g.setColor(Color.DARK_GRAY);
-		g.fillRect(Window.WIDTH - 150, 0, Window.WIDTH, 150);
+		g.fillRect(Window.WIDTH - 150, 0, Window.WIDTH, 180);
 		g.setColor(Color.white);
-		g.setFont(new Font("Sans-Serif", Font.PLAIN, 14));
+		g.setFont(new Font("Sans-Serif", Font.PLAIN, 12));
 		int textX = Window.WIDTH - 140;
-		g.drawString("Dist: " + "" + counter, textX, 10);
-		g.drawString("Best: " + "" + bestScore, textX, 25);
-		g.drawString("Generation: " + Gens, textX, 40);
-		g.drawString("BirdCount:" + population.size(), textX, 55);
-		g.drawString("DeadBirds:" + saved.size(), textX, 70);
-
+		g.drawString("Dist: " + "" + counter, textX, 50);
+		g.drawString("Best: " + "" + bestScore, textX, 70);
+		g.drawString("Generation: " + Gens, textX, 90);
+		g.drawString("BirdCount:" + population.size(), textX, 110);
+		g.drawString("DeadBirds:" + saved.size(), textX, 130);
+		g.drawString("Speed: "+cycles+"X", textX, 150);
+		g.drawString("(Click to change speed)", textX, 170);
 		for (Bird b : population) {
 			b.render(g);
 		}
+
 	}
 
 	public Game() {
