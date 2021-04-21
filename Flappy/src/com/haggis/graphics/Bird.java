@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.haggis.utils.Rand;
-import com.haggis.utils.Vector;
+import haggis.Vector;
 
 class Bird{
   Vector pos, vel, acc;

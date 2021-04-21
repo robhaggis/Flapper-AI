@@ -3,7 +3,7 @@ package com.haggis.graphics;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.haggis.utils.Rand;
+import haggis.Rand;
 
 public class Pipe{
 

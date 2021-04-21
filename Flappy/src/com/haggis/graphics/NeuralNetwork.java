@@ -1,6 +1,6 @@
 package com.haggis.graphics;
 
-import com.haggis.utils.Rand;
+import haggis.Rand;
 
 class NeuralNetwork {
 	int inputNodes, hiddenNodes, outputNodes;

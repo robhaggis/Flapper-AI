@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.haggis.utils.Rand;
-
 public class Game {
 
 	static ArrayList<Bird> population;
@@ -20,7 +18,7 @@ public class Game {
 	int cycles = 1;
 
 	void init() {
-		TOTAL = 500;
+		TOTAL = 300;
 		pipes = new ArrayList<Pipe>();
 		population = new ArrayList<Bird>();
 		saved = new ArrayList<Bird>();
